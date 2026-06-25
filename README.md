@@ -27,9 +27,7 @@ Both schemes closely match their theoretical convergence rates, confirming the c
 
 The asset price process is modelled by the stochastic differential equation:
 
-$$
-dS_t = \mu S_t\,dt + \sigma S_t\,dW_t
-$$
+$$dS_t = \mu S_t \, dt + \sigma S_t \, dW_t$$
 
 where:
 
@@ -39,14 +37,7 @@ where:
 
 Applying Itô's Lemma to $\ln(S_t)$ gives the analytical solution:
 
-$$
-S_T =
-S_0
-\exp
-\left(
-(\mu-\frac{1}{2}\sigma^2)T+\sigma W_T
-\right)
-$$
+$$S_T = S_0 \exp\!\left[\left(\mu - \tfrac{1}{2}\sigma^2\right)T + \sigma W_T\right]$$
 
 This exact solution provides a **reference solution** for evaluating numerical approximation errors.
 
@@ -56,15 +47,8 @@ This exact solution provides a **reference solution** for evaluating numerical a
 
 Euler–Maruyama discretises the SDE directly:
 
-$$
-S_{n+1}
-=
-S_n
-+
-\mu S_n \Delta t
-+
-\sigma S_n \Delta W_n
-$$
+$$S_{n+1} = S_n + \mu S_n \Delta t + \sigma S_n \Delta W_n \qquad \text{(strong order 0.5)}$$
+
 
 with theoretical strong convergence order:
 
@@ -76,18 +60,7 @@ $$
 
 Milstein improves Euler–Maruyama by adding an Itô correction term:
 
-$$
-S_{n+1}
-=
-S_n
-+
-\mu S_n\Delta t
-+
-\sigma S_n\Delta W_n
-+
-\frac12\sigma^2S_n
-((\Delta W_n)^2-\Delta t)
-$$
+$$S_{n+1} = S_n + \mu S_n \Delta t + \sigma S_n \Delta W_n + \tfrac{1}{2}\sigma^2 S_n \!\left[(\Delta W_n)^2 - \Delta t\right] \qquad \text{(strong order 1.0)}$$
 
 with theoretical strong convergence order:
 
@@ -115,62 +88,16 @@ The main challenge in measuring strong convergence is ensuring that the exact so
 Following the framework of Higham (2001), the experiment uses a shared Brownian path across all discretization levels.
 
 ## Procedure
-
-1. Generate a fine Brownian grid:
-
-$$
-\delta t = \frac{T}{N_{fine}}
-$$
-
-with:
-
-$$
-N_{fine}=2^{12}=4096
-$$
-
-
-2. Compute the reference GBM solution using:
-
-$$
-W_T=\sum_i \Delta W_i
-$$
-
-
-3. Construct coarser time steps by aggregating fine Brownian increments:
-
-$$
-\Delta W_{coarse}
-=
-\sum_{i=1}^{R}\Delta W_i
-$$
-
-
-4. Simulate Euler–Maruyama and Milstein paths.
-
-5. Compute the mean strong error:
-
-$$
-Error
-=
-\frac1M
-\sum_{j=1}^{M}
-|
-S_T^{exact}
--
-S_T^{numerical}
-|
-$$
-
-
-6. Plot:
-
-$$
-\log(Error)
-\quad\text{against}\quad
-\log(\Delta t)
-$$
-
-The slope of the regression line estimates the empirical convergence order.
+1. Generate one fine Brownian path with step $\delta t = T / N_{\text{fine}}$,
+   where $N_{\text{fine}} = 2^{12} = 4096$
+2. Compute $S_T^{\text{exact}}$ using the full terminal increment $W_T = \sum_i \Delta W_i^{\text{fine}}$
+3. Simulate EM and Milstein at coarser steps $\Delta t = R \cdot \delta t$
+   (for $R = 2^4, 2^5, \ldots, 2^{11}$) by **summing $R$ consecutive fine increments**
+   — no new random numbers are drawn
+4. Average the absolute error over $M = 10{,}000$ independent paths:
+   $$\text{Strong error} = \frac{1}{M} \sum_{j=1}^{M} |S_T^{(j),\text{exact}} - S_T^{(j),\text{num}}|$$
+5. Plot $\log(\text{error})$ vs $\log(\Delta t)$ and fit a regression line —
+   the slope gives the empirical convergence order
 
 ## Parameters
 
