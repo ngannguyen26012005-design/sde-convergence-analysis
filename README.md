@@ -6,11 +6,7 @@ differential equations (SDEs), applied to Geometric Brownian Motion (GBM).
 This project was developed as an independent computational mathematics study, combining stochastic calculus, numerical analysis, and computational finance.
 
 ## Research Question
-
-> Do the Euler–Maruyama and Milstein schemes empirically achieve their
-> theoretical strong convergence rates of order 0.5 and 1.0 respectively
-> when applied to Geometric Brownian Motion, and how do their accuracy and
-> computational cost compare as a function of step size?
+Do the Euler–Maruyama and Milstein schemes empirically achieve their theoretical strong convergence rates of order 0.5 and 1.0 respectively when applied to Geometric Brownian Motion, and how do their accuracy and computational cost compare as a function of step size?
 
 ## Results at a Glance
 
