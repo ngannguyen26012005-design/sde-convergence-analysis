@@ -65,9 +65,6 @@ $$
 The correction term improves pathwise accuracy by incorporating information from the variation of the diffusion coefficient.
 
 ## Strong and Weak Convergence
-
-## Strong and Weak Convergence
-
 Numerical methods for SDEs can be evaluated using two main concepts:
 
 ### Strong Convergence
