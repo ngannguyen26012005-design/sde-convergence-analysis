@@ -1,8 +1,6 @@
 # Convergence Analysis of Numerical Methods for Stochastic Differential Equations
-
 A self-contained Python project empirically validating the **strong convergence properties** of the Euler–Maruyama and Milstein numerical schemes for stochastic
 differential equations (SDEs), applied to Geometric Brownian Motion (GBM).
-
 This project was developed as an independent computational mathematics study, combining stochastic calculus, numerical analysis, and computational finance.
 
 ## Research Question
