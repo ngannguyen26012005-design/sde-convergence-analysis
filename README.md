@@ -72,14 +72,26 @@ The correction term improves pathwise accuracy by incorporating information from
 
 ## Strong and Weak Convergence
 
-| Type | Definition | Meaning |
-|---|---|---|
-| Strong convergence | $\mathbb{E}[|S_T^{exact}-S_T^{num}|]=O(\Delta t^\gamma)$ | Measures pathwise accuracy using the same Brownian trajectory |
-| Weak convergence | $|\mathbb{E}[g(S_T^{exact})]-\mathbb{E}[g(S_T^{num})]|=O(\Delta t^\beta)$ | Measures accuracy of expectations such as option prices |
+## Strong and Weak Convergence
 
-For GBM, both Euler–Maruyama and Milstein achieve weak convergence order 1.0
-under standard assumptions.
+Numerical methods for SDEs can be evaluated using two main concepts:
 
+### Strong Convergence
+
+Strong convergence measures the error between numerical and exact solutions along the **same stochastic path**.
+E[ |S_exact - S_num| ] = O(Δt^γ), where γ represents the strong convergence order.
+
+In this project:
+
+- Euler–Maruyama: γ = 0.5
+- Milstein: γ = 1.0
+### Weak Convergence
+
+Weak convergence measures the difference between expected values of functions of the solution.E[g(S_exact)] - E[g(S_num)]| = O(Δt^β)
+
+This is important in financial applications because option pricing depends on expected payoffs.
+
+For GBM, both Euler–Maruyama and Milstein have weak convergence order 1.0.
 
 # Experimental Design
 
@@ -179,32 +191,22 @@ remains present at finite step sizes.
 # Conclusion and Limitations
 
 This project experimentally verified the theoretical strong convergence rates of two classical numerical schemes for stochastic differential equations.
-
 The Euler–Maruyama method achieved approximately:
-
 $$
 O(\Delta t^{0.5})
 $$
-
 while Milstein achieved approximately:
-
 $$
 O(\Delta t)
 $$
-
-The results confirm that Milstein provides improved pathwise accuracy due to its
-higher-order correction term.
-
-The project also demonstrated how numerical SDE methods can be applied to
-computational finance through European option pricing.
+The results confirm that Milstein provides improved pathwise accuracy due to its higher-order correction term.
+The project also demonstrated how numerical SDE methods can be applied to computational finance through European option pricing.
 
 ## Limitations
-
 - The model is restricted to Geometric Brownian Motion, a linear SDE with constant coefficients.
 - Real financial markets exhibit volatility clustering, jumps, and heavy tails not captured by GBM.
 - Weak convergence analysis was not explored in depth.
 - Extension to multidimensional SDEs would require additional techniques such as Lévy area simulation.
-
 Future extensions could include stochastic volatility models such as the Heston model or more advanced Monte Carlo methods.
 
 # References
